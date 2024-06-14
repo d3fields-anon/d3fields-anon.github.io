@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="D^3Fields: Dynamic 3D Descriptor Fields for Zero-Shot Generalizable Rearrangement">
+  <meta name="keywords" content="Robotic Manipulation, Language Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>D3Fields</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FV4ZJ9PVSV"></script>  
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FV4ZJ9PVSV');
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+
+    function updateInteractive() {
+      var task = document.getElementById("interative-menu").value;
+
+      console.log("interactive", task)
+
+      var img = document.getElementById("interactive-img");
+      img.src = "media/interactive/" + 
+                  task + 
+                  "_crop.png"
+
+      var html_1 = document.getElementById("interactive-html-1");
+      html_1.src = "media/interactive/" + 
+                  task + 
+                  "_mask.html"
+
+      var html_2 = document.getElementById("interactive-html-2");
+      html_2.src = "media/interactive/" + 
+                  task + 
+                  "_feature.html"
+    }
+    
+    function updateTracking() {
+      var task = document.getElementById("tracking-menu").value;
+
+      console.log("interactive", task)
+
+      var vid = document.getElementById("tracking-vid");
+      vid.src = "media/interactive/" + 
+                  task + 
+                  ".mp4"
+
+      var html_1 = document.getElementById("tracking-html");
+      html_1.src = "media/interactive/" + 
+                  task + 
+                  ".html"
+    }
+
+
+
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="media/figures/d3fields_logo.png"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body onload="updateInteractive();">
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-fullhd">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">D<sup>3</sup>Fields: Dynamic 3D Descriptor Fields<br>for Zero-Shot Generalizable Rearrangement</h1>
+          <!-- <h3 class="title is-4 conference-authors"><a target="_blank" href="https://www.corl2023.org/">CoRL 2023 (Oral)</a></h3> -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <strong>Anonymous</strong>
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-fullhd">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-vcentered  is-centered">
+          <video id="teaser" autoplay muted loop height="60%" width="60%">
+            <source src="media/videos/teaser.mp4"
+                    type="video/mp4">
+          </video>
+          </br>
+        </div>
+        <br>
+        <h2 class="subtitle has-text-centered">
+        D<sup>3</sup>Fields is a <b>3D</b>, <b>dynamic</b>, and <b>semantic</b> scene representation using foundation models,<br>which supports <b>zero-shot</b> generalizable rearrangement tasks.
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <video poster="" autoplay muted loop height="100%">
+            <source src="media/videos/almonds.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" autoplay muted loop height="100%">
+            <source src="media/videos/office.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" autoplay muted loop height="100%">
+            <source src="media/videos/push_shoe.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video poster="" autoplay muted loop height="100%">
+            <source src="media/videos/shoe.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+           <video poster="" autoplay muted loop height="100%">
+             <source src="media/videos/utensil_trial_18.mp4"
+                     type="video/mp4">
+           </video>
+         </div>
+         <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/utensil_trial_19.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/utensil_trial_23.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/sim_food.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/sim_mugs.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/sim_shoe.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="item">
+            <video poster="" autoplay muted loop height="100%">
+              <source src="media/videos/sim_utensils.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<h2 class="subtitle has-text-centered">
+</br>
+  D<sup>3</sup>Fields supports goal specification using 2D images with varied styles, contexts, and instances<br>and <b>zero-shot</b> generalizable manipulation applicable to a broad spectrum of household tasks.
+</h2>
+
+
+<section class="section">
+  <!-- Abstract. -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Scene representation has been a crucial design choice in robotic manipulation systems. An ideal representation is expected to be 3D, dynamic, and semantic to meet the demands of diverse manipulation tasks. However, previous works often lack all three properties simultaneously. In this work, we introduce D<sup>3</sup>Fields---<b>dynamic 3D descriptor fields</b>.
+            These fields are <b>implicit 3D representations</b> that take in 3D points and output both semantic features and instance masks.
+            They can also capture the dynamics of the underlying 3D environments.
+            Specifically, we project arbitrary 3D points in the workspace onto multi-view 2D visual observations and interpolate features derived from visual foundational models. The resulting fused descriptor fields allow for flexible goal specifications using 2D images with varied contexts, styles, and instances.
+            To evaluate the effectiveness of these descriptor fields, we apply our representation to rearrangement tasks in a zero-shot manner.
+            Through extensive evaluation in both real-world scenarios and simulations, we demonstrate that D<sup>3</sup>Fields are effective for <b>zero-shot generalizable</b> rearrangement tasks.
+            We also compare D<sup>3</sup>Fields with state-of-the-art implicit 3D representations and show significant improvements in effectiveness and efficiency.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+
+
+    <div class="rows is-centered ">
+      <div class="row is-full-width">
+        <h2 class="title is-3">D<sup>3</sup>Fields</h2>
+
+        <div class="content has-text-justified">
+        </div>
+        <img src="media/figures/method.png" class="interpolation-image" />
+        </br>
+        </br>
+          <p class="content has-text-justified">
+            <b>Overview of the proposed framework.</b>
+          (a) Multi-view RGBD observations are first processed by foundation models to obtain the feature volume \(\mathcal{W}\).
+          (b) Through marching cubes, we could reconstruct the mesh from the implicit signed distance function.
+          (c) Given a 2D goal image, we use foundation models to extract the descriptor map. Then we correspond 3D features to 2D features and define the planning cost based on the correspondence.
+          </p>
+        
+      <br>
+      <br>
+
+      <h2 class="title is-3">Interactive Visualization</h2>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+
+          Visualize D<sup>3</sup>Fields for
+          <div class="select is-small is-rounded">     
+            <select id="interative-menu" onchange="updateInteractive()">
+            <option value="shoe" selected="selected">shoes</option>
+            <option value="mug">mugs</option>
+            <option value="fork">forks</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+          <p style="text-align:center;">
+            <!-- <img id="interactive-img", src="media/interactive/shoe_crop.png" class="interpolation-image" /> -->
+            <iframe id="interactive-img" src="media/interactive/shoe_crop.png" width=320 height=320 frameborder="0"></iframe>
+          </p>
+        </div>
+        <div class="column has-text-centered">
+          <iframe id="interactive-html-1" src="media/interactive/shoe_mask.html" width=400 height=300 frameborder="0"></iframe>
+          <p style="text-align:center;">
+            Mask Field
+          </p>
+        </div>
+        <div class="column has-text-centered" id="second-iframe-container">
+          <iframe id="interactive-html-2" src="media/interactive/shoe_feature.html" width=400 height=300 frameborder="0"></iframe>
+          <p style="text-align:center;">
+            Descriptor Field
+          </p>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+
+          Visualize tracking for 
+          <div class="select is-small is-rounded">     
+            <select id="tracking-menu" onchange="updateTracking()">
+            <option value="example_1" selected="selected">example 1</option>
+            <option value="example_2">example 2</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="columns">
+        <div class="column is-half has-text-centered">
+          <p style="text-align:center;">
+            <video id="tracking-vid" width="100%" height="100%" controls autoplay loop muted>
+              <source src="media/interactive/example_1.mp4" type="video/mp4">
+            </video>
+            3D Tracking Visualization (Projected to Image Space)
+          </p>
+          </p>
+        </div>
+        <div class="column is-half has-text-centered">
+          <iframe id="tracking-html" src="media/interactive/example_1.html" width=500 height=315 frameborder="0"></iframe>
+          <p style="text-align:center;">
+            3D Tracking Trace Visualization
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+
+
+    <div class="rows is-centered ">
+      <div class="row is-full-width">
+
+        <h2 class="title is-3">Interactive Visualization</h2>
+
+        <div class="columns">
+          <div class="column has-text-centered">
+
+            Visualize D<sup>3</sup>Fields for
+            <div class="select is-small is-rounded">     
+              <select id="interative-menu" onchange="updateInteractive()">
+              <option value="shoe" selected="selected">shoes</option>
+              <option value="mug">mugs</option>
+              <option value="fork">forks</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="columns">
+          <div class="column is-half has-text-centered">
+            <p style="text-align:center;">
+              <img id="interactive-img", src="media/interactive/shoe.png" class="interpolation-image" />
+            </p>
+          </div>
+          <div class="column has-text-centered">
+            <iframe id="interactive-html-1" src="media/interactive/shoe_mask.html" width="100%" height="300" frameborder="0"></iframe>
+            <p style="text-align:center;">
+              Mask Field
+            </p>
+          </div>
+          <div class="column has-text-centered" id="second-iframe-container">
+            <iframe id="interactive-html-2" src="media/interactive/shoe_feature.html" width="100%" height="300" frameborder="0"></iframe>
+            <p style="text-align:center;">
+              Descriptor Field
+            </p>
+          </div>
+        </div>
+        
+        
+    </div>
+  </div>
+</section> -->
+
+
+<!-- <section class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+      <h2 class="title is-3">Execution under Disturbances</h2>
+      
+      <p class="content has-text-justified">
+        Our framework is robust to external disturbances. We show that our framework could recover from disturbances in the following videos.
+      </p>
+      
+      <div class="columns">
+        <div class="column has-text-centered">
+          <video id="dist1"
+            controls
+            muted
+            autoplay
+            loop
+            width="99%">
+            <source src="media/videos/perturbation_shoe.mp4" 
+            type="video/mp4">
+          </video>
+        </div>
+    
+        <div class="column has-text-centered">
+          <video id="dist2"
+            controls
+            muted
+            autoplay
+            loop
+            width="99%">
+            <source src="media/videos/perturbation_utensils.mp4" 
+            type="video/mp4">
+          </video>
+        </div>
+  </div>
+  </div>
+</section> -->
+
+<!-- <section class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="rows">
+      <h2 class="title is-3">Emergent Behavioral Capabilities</h2>
+      
+      <p class="content has-text-justified">
+        <li><strong>Estimating Physical Properties</strong>: given two blocks of unknown mass, the robot is tasked to conduct physics experiments using the available tools to determine which block is heavier.</li>
+        <li><strong>Behavioral Commonsense Reasoning</strong>: during a task where robot is setting the table, the user can specify behavioral preferences such as "I am left-handed", which requires the robot to comprehend its meaning in the context of the task.</li>
+        <li><strong>Fine-grained Language Correction</strong>: for tasks that require high precision such as "covering the teapot with the lid", user can give precise instructions to the robot such as "you're off by 1cm".</li>
+        <li><strong>Multi-step Visual Program</strong>: given a task "open the drawer precisely by half" where there is insufficient information because object models are not available, the robot can come up with multi-step manipulation strategies based on visual feedback that first opens the drawer fully while recording handle displacement, then close it back to the mid-point to satisfy the requirement.</li>
+      </p>
+      <br>
+      <div style="text-align: center;">
+        <img src="media/figures/emergent.png" class="interpolation-image" style="width: 70%; height: auto;"/>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+  <div class="row">
+    <h2 class="title is-3">
+      Prompts
+    </h2>
+    <p class="content has-text-justified">
+        Prompts in Real-World Environments:
+        <br>
+        <a href="prompts/real_planner_prompt.txt">Planner</a> |
+        <a href="prompts/real_composer_prompt.txt">Composer</a> |
+        <a href="prompts/real_parse_query_obj_prompt.txt">Parse Query Object</a> |
+        <a href="prompts/real_get_affordance_map_prompt.txt">Get Affordance Maps</a> |
+        <a href="prompts/real_get_avoidance_map_prompt.txt">Get Avoidance Maps</a> |
+        <a href="prompts/real_get_rotation_map_prompt.txt">Get Rotation Maps</a> |
+        <a href="prompts/real_get_velocity_map_prompt.txt">Get Velocity Maps</a> |
+        <a href="prompts/real_get_gripper_map_prompt.txt">Get Gripper Maps</a>
+    </p>
+    <p class="content has-text-justified">
+        Prompts in Simulation Environments (planners are not used in simulation):
+        <br>
+        <a href="prompts/sim_composer_prompt.txt">Composer</a> |
+        <a href="prompts/sim_parse_query_obj_prompt.txt">Parse Query Object</a> |
+        <a href="prompts/sim_get_affordance_map_prompt.txt">Get Affordance Maps</a> |
+        <a href="prompts/sim_get_avoidance_map_prompt.txt">Get Avoidance Maps</a> |
+        <a href="prompts/sim_get_rotation_map_prompt.txt">Get Rotation Maps</a> |
+        <a href="prompts/sim_get_velocity_map_prompt.txt">Get Velocity Maps</a> |
+        <a href="prompts/sim_get_gripper_map_prompt.txt">Get Gripper Maps</a>
+    </p>
+  </div>
+  </div>
+</section>  -->
+
+
+<!-- <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>, <a href="https://peract.github.io/">PerAct</a>, and <a href="https://voxposer.github.io/">VoxPoser</a>. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> -->
+
+
+</body>
+</html>
